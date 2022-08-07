@@ -3,7 +3,7 @@ window.addEventListener('load', function(){
 
 	let timer1 = new Timer('.timer1', 10);
 	let timer2 = new Timer('.timer2', 30);
-	let timer3 = new TimerFormat('.timer3', 8000);
+	let timer3 = new TimerFormat('.timer3', 75600);
 	// let timer4 = new TimerWithWords('.timer4', 55000);
 
 	timer1.start();
@@ -56,30 +56,29 @@ class Timer{
 class TimerFormat extends Timer{
 	render(){
 
-		const wordsTimer = {
-			h: (h) => {
-				if (h == 1) {
-					return 'час';
-				} else if (h > 1 && h < 5) {
-					return 'часа'
-				}
-			},
-
-			'-': (num1, num2) => num1 - num2,
-			'*': (num1, num2) => num1 * num2,
-			'/': (num1, num2) => num1 / num2,
-		};
+		var declOfNum = function(number, textForm)
+		{  
+			var  cases = [2, 0, 1, 1, 1, 2];  
+			return textForm[ 
+					(number % 100 > 4 && number % 100 < 20) 
+					? 
+					2 
+					: 
+					cases[(number % 10 < 5) ? number % 10 : 5] 
+			];  
+		} 
 
 
 		let h = parseInt(this.time / 3600);
-		let hWord = wordsTimer.h(h)
+		let hWord = declOfNum(h, ['час', 'часа', 'часов']);
 		let hs = this.time % 3600;
 		let m = parseInt(hs /  60);
-		let mWord = `mm`
+		let mWord = declOfNum(m, ['минута', 'минуты', 'минут']);
 		let s = hs % 60;
-		let sWord = `mssm`
+		let sWord = declOfNum(s, ['секунда', 'секунды', 'секунд'])
 		this.box.innerHTML = `${h} ${hWord} :${m} ${mWord} :${s} ${sWord}`;
 	}
+ 
 }
 
 // class TimerWithWords extends TimerFormat{
