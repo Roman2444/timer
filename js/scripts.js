@@ -1,15 +1,15 @@
-// bad code
 window.addEventListener('load', function(){
 
 	let timer1 = new Timer('.timer1', 10);
 	let timer2 = new Timer('.timer2', 30);
-	let timer3 = new TimerFormat('.timer3', 5);
-	// let timer4 = new TimerWithWords('.timer4', 55000);
+	let timer3 = new TimerFormat('.timer3', 500);
+	let timer4 = new TimerWithWords('.timer4', 5);
 
 	timer1.start();
 	timer2.start();
-	// timer4.start();
+	timer4.start();
 	console.log(timer1)
+	console.log(timer4)
 	document.querySelector('.pr2buy').addEventListener('click', function(){
 		this.disabled = true;
 		this.innerHTML = 'Скидка ваша!';
@@ -54,6 +54,16 @@ class Timer{
 }
 
 class TimerFormat extends Timer{
+    render(){
+        this.h = parseInt(this.time / 3600);
+        this.hs = this.time % 3600;
+        this.m = parseInt(this.hs /  60);
+        this.s = this.hs % 60;
+        this.box.innerHTML = `${this.h}:${this.m}:${this.s}`;
+    }
+}
+
+class TimerWithWords  extends TimerFormat {
 
 	constructor(selector, time){
 		super(selector,time)
@@ -61,6 +71,7 @@ class TimerFormat extends Timer{
 	}
 
 	render(){
+		super.render()
 
 		var declOfNum = function(number, textForm)
 		{  
@@ -74,15 +85,10 @@ class TimerFormat extends Timer{
 			];  
 		} 
 
-
-		let h = parseInt(this.time / 3600);
-		let hWord = declOfNum(h, ['час', 'часа', 'часов']);
-		let hs = this.time % 3600;
-		let m = parseInt(hs /  60);
-		let mWord = declOfNum(m, ['минута', 'минуты', 'минут']);
-		let s = hs % 60;
-		let sWord = declOfNum(s, ['секунда', 'секунды', 'секунд'])
-		this.box.innerHTML = `${h} ${hWord} :${m} ${mWord} :${s} ${sWord}`;
+		let hWord = declOfNum(this.h, ['час', 'часа', 'часов']);
+		let mWord = declOfNum(this.m, ['минута', 'минуты', 'минут']);
+		let sWord = declOfNum(this.s, ['секунда', 'секунды', 'секунд'])
+		this.box.innerHTML = `${this.h} ${hWord} :${this.m} ${mWord} :${this.s} ${sWord}`;
 	}
 
 	stop(){
@@ -91,70 +97,8 @@ class TimerFormat extends Timer{
 	}
 
 	endFunction(){
-		console.log('the end')
+		
 		this.box.innerHTML = 'Время тю-тю'
 	}
  
 }
-
-// class TimerWithWords extends TimerFormat{
-// 	render(){
-// 		super.render()
-// 		let h = parseInt(this.time / 3600);
-// 		let hs = this.time % 3600;
-// 		let m = parseInt(hs /  60);
-// 		let s = hs % 60;
-// 		this.box.innerHTML = `${h}:${m}:${s}`;
-// 	}
-// }
-
-/* class TimerFormat extends Timer{
-	constructor(selector, time){
-		super(selector, time); // super.constructor
-		this.a = 1;
-	}
-
-	render(){
-		let h = parseInt(this.time / 3600);
-		let hs = this.time % 3600;
-		let m = parseInt(hs /  60);
-		let s = hs % 60;
-		this.box.innerHTML = `${h}:${m}:${s}`;
-	}
-
-	start(){
-		console.log('timer started');
-		super.start();
-	}
-} */
-
-// super
-
-/*
-	class Cat{ 
-		findEat(){
-			// go hunt
-		}
-	}
-
-	class CatHome{
-		findEat(){
-			while(hungry){
-				sayMyow();
-
-				if(humanNotExists){
-					break;
-				}
-			}
-
-			if(veryHungry){
-				super.findEat();
-			}
-			else{
-				this.findHuman();
-				this.findEat();
-			}
-		}
-	}
-
-*/
