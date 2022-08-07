@@ -3,10 +3,12 @@ window.addEventListener('load', function(){
 
 	let timer1 = new Timer('.timer1', 10);
 	let timer2 = new Timer('.timer2', 30);
-	let timer3 = new TimerFormat('.timer3', 5000);
+	let timer3 = new TimerFormat('.timer3', 8000);
+	// let timer4 = new TimerWithWords('.timer4', 55000);
 
 	timer1.start();
 	timer2.start();
+	// timer4.start();
 	console.log(timer1)
 	document.querySelector('.pr2buy').addEventListener('click', function(){
 		this.disabled = true;
@@ -53,13 +55,43 @@ class Timer{
 
 class TimerFormat extends Timer{
 	render(){
+
+		const wordsTimer = {
+			h: (h) => {
+				if (h == 1) {
+					return 'час';
+				} else if (h > 1 && h < 5) {
+					return 'часа'
+				}
+			},
+
+			'-': (num1, num2) => num1 - num2,
+			'*': (num1, num2) => num1 * num2,
+			'/': (num1, num2) => num1 / num2,
+		};
+
+
 		let h = parseInt(this.time / 3600);
+		let hWord = wordsTimer.h(h)
 		let hs = this.time % 3600;
 		let m = parseInt(hs /  60);
+		let mWord = `mm`
 		let s = hs % 60;
-		this.box.innerHTML = `${h}:${m}:${s}`;
+		let sWord = `mssm`
+		this.box.innerHTML = `${h} ${hWord} :${m} ${mWord} :${s} ${sWord}`;
 	}
 }
+
+// class TimerWithWords extends TimerFormat{
+// 	render(){
+// 		super.render()
+// 		let h = parseInt(this.time / 3600);
+// 		let hs = this.time % 3600;
+// 		let m = parseInt(hs /  60);
+// 		let s = hs % 60;
+// 		this.box.innerHTML = `${h}:${m}:${s}`;
+// 	}
+// }
 
 /* class TimerFormat extends Timer{
 	constructor(selector, time){
