@@ -3,7 +3,7 @@ window.addEventListener('load', function(){
 
 	let timer1 = new Timer('.timer1', 10);
 	let timer2 = new Timer('.timer2', 30);
-	let timer3 = new TimerFormat('.timer3', 75600);
+	let timer3 = new TimerFormat('.timer3', 5);
 	// let timer4 = new TimerWithWords('.timer4', 55000);
 
 	timer1.start();
@@ -54,6 +54,12 @@ class Timer{
 }
 
 class TimerFormat extends Timer{
+
+	constructor(selector, time){
+		super(selector,time)
+		this.endFunction()
+	}
+
 	render(){
 
 		var declOfNum = function(number, textForm)
@@ -77,6 +83,16 @@ class TimerFormat extends Timer{
 		let s = hs % 60;
 		let sWord = declOfNum(s, ['секунда', 'секунды', 'секунд'])
 		this.box.innerHTML = `${h} ${hWord} :${m} ${mWord} :${s} ${sWord}`;
+	}
+
+	stop(){
+		super.stop();
+		this.endFunction()
+	}
+
+	endFunction(){
+		console.log('the end')
+		this.box.innerHTML = 'Время тю-тю'
 	}
  
 }
