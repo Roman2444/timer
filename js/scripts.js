@@ -78,6 +78,7 @@ class TimerWithWords  extends TimerFormat {
 
 	render(){
 		super.render()
+		let tp = this.splitTime();
 
 		var declOfNum = function(number, textForm)
 		{  
@@ -91,10 +92,10 @@ class TimerWithWords  extends TimerFormat {
 			];  
 		} 
 
-		let hWord = declOfNum(this.h, ['час', 'часа', 'часов']);
-		let mWord = declOfNum(this.m, ['минута', 'минуты', 'минут']);
-		let sWord = declOfNum(this.s, ['секунда', 'секунды', 'секунд'])
-		this.box.innerHTML = `${this.h} ${hWord} :${this.m} ${mWord} :${this.s} ${sWord}`;
+		let hWord = declOfNum(tp.h, ['час', 'часа', 'часов']);
+		let mWord = declOfNum(tp.m, ['минута', 'минуты', 'минут']);
+		let sWord = declOfNum(tp.s, ['секунда', 'секунды', 'секунд'])
+		this.box.innerHTML = `${tp.h} ${hWord} :${tp.m} ${mWord} :${tp.s} ${sWord}`;
 	}
 
 	stop(){
