@@ -54,12 +54,18 @@ class Timer{
 }
 
 class TimerFormat extends Timer{
+	splitTime(){
+       let h = parseInt(this.time / 3600);
+       let hs = this.time % 3600;
+       let m = parseInt(hs /  60);
+       let s = hs % 60;
+
+	   return {h, m, s}
+	}
+
     render(){
-        this.h = parseInt(this.time / 3600);
-        this.hs = this.time % 3600;
-        this.m = parseInt(this.hs /  60);
-        this.s = this.hs % 60;
-        this.box.innerHTML = `${this.h}:${this.m}:${this.s}`;
+		let tp = this.splitTime();
+        this.box.innerHTML = `${tp.h}:${tp.m}:${tp.s}`;
     }
 }
 
