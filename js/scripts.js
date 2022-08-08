@@ -3,7 +3,7 @@ window.addEventListener('load', function(){
 	let timer1 = new Timer('.timer1', 10);
 	let timer2 = new Timer('.timer2', 30);
 	let timer3 = new TimerFormat('.timer3', 500);
-	let timer4 = new TimerWithWords('.timer4', 5);
+	let timer4 = new TimerWithWords('.timer4', 444);
 
 	timer1.start();
 	timer2.start();
@@ -77,26 +77,24 @@ class TimerWithWords  extends TimerFormat {
 	}
 
 	render(){
-		super.render()
 		let tp = this.splitTime();
 
-		var declOfNum = function(number, textForm)
-		{  
-			var  cases = [2, 0, 1, 1, 1, 2];  
-			return textForm[ 
-					(number % 100 > 4 && number % 100 < 20) 
-					? 
-					2 
-					: 
-					cases[(number % 10 < 5) ? number % 10 : 5] 
-			];  
-		} 
-
-		let hWord = declOfNum(tp.h, ['час', 'часа', 'часов']);
-		let mWord = declOfNum(tp.m, ['минута', 'минуты', 'минут']);
-		let sWord = declOfNum(tp.s, ['секунда', 'секунды', 'секунд'])
+		let hWord = this.declOfNum(tp.h, ['час', 'часа', 'часов']);
+		let mWord = this.declOfNum(tp.m, ['минута', 'минуты', 'минут']);
+		let sWord = this.declOfNum(tp.s, ['секунда', 'секунды', 'секунд'])
 		this.box.innerHTML = `${tp.h} ${hWord} :${tp.m} ${mWord} :${tp.s} ${sWord}`;
 	}
+
+	 declOfNum(number, textForm){  
+		let  cases = [2, 0, 1, 1, 1, 2];  
+		return textForm[ 
+				(number % 100 > 4 && number % 100 < 20) 
+				? 
+				2 
+				: 
+				cases[(number % 10 < 5) ? number % 10 : 5] 
+		];  
+	} 
 
 	stop(){
 		super.stop();
