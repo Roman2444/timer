@@ -71,9 +71,10 @@ class TimerFormat extends Timer{
 
 class TimerWithWords  extends TimerFormat {
 
-	constructor(selector, time){
+	constructor(selector, time, onStop=null ){
 		super(selector,time)
 		this.endFunction()
+		this.onStop = onStop
 	}
 
 	render(){
@@ -98,11 +99,13 @@ class TimerWithWords  extends TimerFormat {
 
 	stop(){
 		super.stop();
+		if (this.onStop !== null){
+			this.onStop
+		}
 		this.endFunction()
 	}
 
 	endFunction(){
-		
 		this.box.innerHTML = 'Время тю-тю'
 	}
  
